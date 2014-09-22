@@ -1,0 +1,11 @@
+'//Debug switch
+Global Const debugMode As Boolean = False
+
+'// FileType Enum
+Public Enum ezFileType
+    ezXLS = -4143
+    ezCSV = 6
+    ezXLA = 18
+    ezXLSX = 51
+    ezXLSM = 52
+End Enum
