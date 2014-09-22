@@ -32,5 +32,39 @@ Function ezMonthToTaxP(taxPeriod As Integer)
    End If
 End Function
 
+'// Browse Folder Function
+
+Function BrowseFolder(Title As String, _
+    Optional InitialFolder As String = vbNullString, _
+        Optional InitialView As Office.MsoFileDialogView = _
+        msoFileDialogViewList) As String
+        
+    Dim V As Variant
+    Dim InitFolder As String
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = Title
+        .InitialView = InitialView
+        If Len(InitialFolder) > 0 Then
+            If Dir(InitialFolder, vbDirectory) <> vbNullString Then
+                InitFolder = InitialFolder
+                If Right(InitFolder, 1) <> "\" Then
+                    InitFolder = InitFolder & "\"
+                End If
+                .InitialFileName = InitFolder
+            End If
+        End If
+        .Show
+        On Error Resume Next
+        Err.Clear
+        V = .SelectedItems(1)
+        If Err.Number <> 0 Then
+            V = "ERR"
+        End If
+    
+    End With
+    BrowseFolder = CStr(V)
+    On Error GoTo 0
+End Function
+
 
 
