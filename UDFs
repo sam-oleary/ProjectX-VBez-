@@ -1,0 +1,36 @@
+'//------------------------
+'// DATE RELATED UDF's
+'//------------------------
+
+
+Function ezTaxP(month As Integer)
+'Get tax period from month (e.g. 1 => 4)
+    If month < 10 Then
+        ezTaxP = (month + 14 Mod 12) + 1
+    Else
+        ezTaxP = (month + 14 Mod 12) - 11
+    End If
+End Function
+
+
+Function ezTaxPName(month As Integer, Optional abbrv As Boolean = True)
+'Convert tax period to month (e.g. 1 => Apr) - set abbrv to False to show full month name
+    If month < 10 Then
+        ezTaxPName = MonthName((month + 14 Mod 12) + 1, abbrv)
+    Else
+        ezTaxPName = MonthName((month + 14 Mod 12) - 11, abbrv)
+    End If
+End Function
+
+
+Function ezMonthToTaxP(taxPeriod As Integer)
+'Get month from tax period (e.g. 4 => 1)
+   If taxPeriod < 4 Then
+        ezMonthToTaxP = taxPeriod - 3 + 12
+   Else
+        ezMonthToTaxP = taxPeriod - 3
+   End If
+End Function
+
+
+
