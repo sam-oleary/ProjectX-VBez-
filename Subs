@@ -1,0 +1,12 @@
+'// SaveAs with folder picker
+
+Public Sub PickFolderSaveAs(WB As Workbook, FileName As String, _
+    FileType As ezFileType, Optional Password As String)
+    
+    MsgBox "Choose a folder to save your workbook in.", vbInformation, "VBez"
+    
+    filePath$ = BrowseFolder("Save Workbook In...", Environ("HOMEPATH"), msoFileDialogViewThumbnail)
+    
+    WB.SaveAs filePath & "\" & FileName, FileType, Password
+    
+End Sub
