@@ -23,11 +23,22 @@ If headerRow Then: rNum = 2: Else: rNum = 1
    
 On Error GoTo checkCells:
 
-With Sheets(sheetName)
-    .Range(columnLetter & rNum, .Range(columnLetter & _
-    .Rows.Count).End(xlUp)).SpecialCells(xlCellTypeBlanks).EntireRow.Delete _
-     shift:=xlUp
-End With
+If CInt(Application.Version) < 14 Then
+    With Sheets(sheetName).Columns(columnLetter)
+        If .SpecialCells(4).Areas(1).Cells.Count = .Cells.Count Then
+            MsgBox "This version of Excel cannot handle more than 8192 areas of special cells.", _
+                vbOKOnly + vbCritical, "Error"
+            Exit Sub
+        End If
+    End With
+Else
+    With Sheets(sheetName)
+        .Range(columnLetter & rNum, .Range(columnLetter & _
+        .Rows.Count).End(xlUp)).SpecialCells(xlCellTypeBlanks).EntireRow.Delete _
+         shift:=xlUp
+    End With
+End If
+
       
 Exit Sub
 
