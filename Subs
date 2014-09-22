@@ -10,3 +10,40 @@ Public Sub PickFolderSaveAs(WB As Workbook, FileName As String, _
     WB.SaveAs filePath & "\" & FileName, FileType, Password
     
 End Sub
+
+'// Ultimate Blank Rows Deletion
+
+Public Sub deleteBlankRowsInColumn(columnLetter As String, _
+    Optional headerRow As Boolean = True, Optional sheetName As String)
+
+Dim rNum As Integer
+
+If headerRow Then: rNum = 2: Else: rNum = 1
+    If sheetName = vbNullString Then sheetName = ActiveSheet.Name
+   
+On Error GoTo checkCells:
+
+With Sheets(sheetName)
+    .Range(columnLetter & rNum, .Range(columnLetter & _
+    .Rows.Count).End(xlUp)).SpecialCells(xlCellTypeBlanks).EntireRow.Delete _
+     shift:=xlUp
+End With
+      
+Exit Sub
+
+checkCells:
+If Err.Number = 1004 Then
+    Exit Sub
+Else
+    MsgBox "There was an error with the ""deleteBlankRowsInColumn()"" function:" & _
+    vbCrLf & _
+    vbCrLf & _
+    "Error number: " & Err.Number & _
+    vbCrLf & _
+    vbCrLf & _
+    Err.Description, vbOKOnly & vbExclamation, "Unexpected Error"
+    
+    Err.Clear
+End If
+
+End Sub
