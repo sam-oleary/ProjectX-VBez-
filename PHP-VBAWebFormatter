@@ -1,0 +1,98 @@
+$strArgs = "
+Global Const debugMode As Boolean = False '//Debug switch
+
+'// FileType Enum
+Public Enum ezFileType
+    ezXLS = -4143
+    ezCSV = 6
+    ezXLA = 18
+    ezXLSX = 51
+    ezXLSM = 52
+End Enum
+
+'// Msgbox Enums
+    '// Button Style
+Public Enum ezMsgButtons
+    ezOK = 0
+    ezOKCancel = 1
+    ezAbortRetryIgnore = 2
+    ezYesNoCancel = 3
+    ezYesNo = 4
+    ezRetryCancel = 5
+End Enum
+
+    '// Icon Style
+Public Enum ezMsgIcons
+    ezCritical = 16
+    ezQuestion = 32
+    ezExclamation = 48
+    ezInformation = 64
+End Enum
+
+    '// Default Button
+Public Enum ezMsgDefaultButton
+    ezButton1 = 0
+    ezButton2 = 256
+    ezButton3 = 512
+End Enum
+
+    '// Misc Settings
+Public Enum ezMsgModalState
+    ezPauseApplication = 0
+    ezPauseAllApplications = 4096
+    ezForceToForeground = 65536
+    ezRightAlignText = 524288
+    ezRightToLeftReading = 1048576
+End Enum
+";
+
+
+
+$strArr = explode("\n", $strArgs);
+
+// keywords array:
+$keywords = Array("Alias", "And", "As", "Boolean", "ByRef", "ByVal", "Call", "Case", "CBool", "CDate", "CDbl", "CInt",
+	"Class", "CLng", "CObj", "Const", "CStr", "Date", "Declare", "Dim", "Do", "Double", "Each", "Else",
+	"ElseIf", "End", "EndIf", "Enum", "Erase", "Error", "Exit", "For", "Friend", "Function", "Get", "Global",
+	"GoTo", "If", "Implements", "In", "Inherits", "Integer", "Interface", "Is", "Let", "Lib", "Like", "Long",
+	"Loop", "Me", "Mod", "Module", "New", "Next", "Not", "Nothing", "Object", "Of", "On", "Option", "Optional",
+	"Or", "OrElse", "Private", "Property", "Protected", "Public", "ReadOnly", "ReDim", "Resume", "Return",
+	"Select", "Set", "Shared", "Static", "Step", "Stop", "String", "Sub", "Then", "To", "TypeOf", "Variant",
+	"Wend", "When", "While", "With", "WriteOnly");
+
+foreach($strArr as $line){
+// Change comments
+	preg_match_all("'\'.*'", $line, $matches);
+	//echo "line: " . $line . " / match: " . $matches[0][0];
+	$newLine = str_replace($matches[0][0], "<span style=\"color: green;\">".$matches[0][0]."</span>",$line);
+
+
+// Change keywords
+	preg_match_all("'.*\''", $newLine, $matches);
+	//echo "line: " . $newLine . " / match: " . $matches[0][0];
+	
+	foreach($keywords as $word){
+		$newLine = str_replace($word, "<span style=\"color: navy;\">".$word."</span>", $newLine);
+	}
+	
+	
+	//Padding
+	$strpad = (strlen($newLine) - strlen(ltrim($newLine))); // no of characters to pad by
+	$pad_string = "&nbsp;";
+	  
+	//Pad text with pad_string 
+	$HTMLtext = str_pad(trim($newLine), strlen(trim($newLine))+($strpad*strlen($pad_string)), $pad_string, STR_PAD_LEFT);
+
+	//update
+	//$strArgs = str_replace($line, $HTMLtext, $strArgs);
+	$outputText = $outputText . "<br>" . $HTMLtext;
+}
+
+// Change spaces to non-breaking space in order to preserve formatting in HTML:
+//$strArgs = str_replace(' ', '&nbsp;', $strArgs);
+
+// Change PHP line break to <br /> to preserve formatting in HTML:
+//$strArgs = nl2br($strArgs);
+
+
+echo $outputText;
