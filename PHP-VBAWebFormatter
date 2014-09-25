@@ -60,7 +60,14 @@ $keywords = Array("Alias", "And", "As", "Boolean", "ByRef", "ByVal", "Call", "Ca
 	"Select", "Set", "Shared", "Static", "Step", "Stop", "String", "Sub", "Then", "To", "True", "TypeOf", "Variant",
 	"Wend", "When", "While", "With", "WriteOnly");
 
+//Store Line count var
+$lineCount = 0;
+
+
 foreach($strArr as $line){
+
+//Update line count
+	$lineCount = $lineCount + 1;
 
 // Change comments
 	preg_match_all("'\'.*'", $line, $matches);
@@ -81,12 +88,8 @@ foreach($strArr as $line){
 	
 	
 	foreach($keywords as $word){
-		// check for "word " (this will give start of line) or " word " (this will do spaces either side)
-	/* SAM EDIT
-		$newLine = str_replace($word." ", "<span style=\"color: white; background: navy;\">".$word."</span> ", $newLine);
-		$newLine = str_replace(" ".$word." ", " <span style=\"color: white; background: navy;\">".$word."</span> ", $newLine);
-	*/
-		$newLine = preg_replace("/(?<!\w)$word(?!\w)/","<span style=\"color: white; background: navy;\">".$word."</span>", $newLine);
+		// colour in keyword
+		$newLine = preg_replace("/(?<!\w)$word(?!\w)/","<span style=\"color: navy; font-weight: bold;\">".$word."</span>", $newLine);
 	}
 	
 	//Only if there is a comment in the line
@@ -102,18 +105,18 @@ foreach($strArr as $line){
 	//Pad text with pad_string 
 	$HTMLtext = str_pad(trim($newLine), strlen(trim($newLine))+($strpad*strlen($pad_string)), $pad_string, STR_PAD_LEFT);
 
+	//Line Number padding
+	$strpad = (3 - strlen($lineCount)); // no of digits to pad by (3)
+	$count_pad_string = "&nbsp;";
+	  
+	//Pad text with count_pad_string 
+	$paddedNo = "<span style=\"background:white;\">" . str_pad($lineCount, strlen($lineCount)+($strpad*strlen($count_pad_string)), $count_pad_string, STR_PAD_LEFT) . ": </span>&nbsp;";
+
+
 	//update
-	//$strArgs = str_replace($line, $HTMLtext, $strArgs);
-	$outputText = $outputText . "<br>" . $HTMLtext;
+	$outputText = $outputText . "<br>" . $HTMLtext; //no line numbers
+	$outputTextCount = $outputTextCount . "<br>" . $paddedNo . $HTMLtext; // line numbers
 	
-	//reset
-	$newLine = "";
 }
 
-// Change spaces to non-breaking space in order to preserve formatting in HTML:
-//$strArgs = str_replace(' ', '&nbsp;', $strArgs);
-
-// Change PHP line break to <br /> to preserve formatting in HTML:
-//$strArgs = nl2br($strArgs);
-
-echo $outputText;
+echo $outputTextCount;
