@@ -61,31 +61,36 @@ $keywords = Array("Alias", "And", "As", "Boolean", "ByRef", "ByVal", "Call", "Ca
 	"Wend", "When", "While", "With", "WriteOnly");
 
 foreach($strArr as $line){
+
 // Change comments
 	preg_match_all("'\'.*'", $line, $matches);
-	//echo "line: " . $line . " / match: " . $matches[0][0];
 	$newLine = str_replace($matches[0][0], "<span style=\"color: green;\">".$matches[0][0]."</span>",$line);
 
-
-// Change keywords
-	preg_match_all("'.*\''", $newLine, $matches);
-	//echo "line: " . $newLine . " / match: " . $matches[0][0] ."\n";
+// Change keywords	
+	//Check if there is a comment
+	If (strpos($newLine, '\'') <> FALSE) {
+		// ID text before '
+		preg_match_all("'.*\''", $newLine, $matches);
+		
+		//save the comment at tmp string if at end of line
+		$tmpComment = str_replace($matches[0][0], "",$newLine);
+		
+		//set string to only be the match
+		$newLine = $matches[0][0];
+	}
 	
-	//save the comment at tmp string if at end of line
-	$tmpComment = str_replace($matches[0][0], "",$newLine);
-	
-	//set string to only be the match
-	$newLine = $matches[0][0];
 	
 	foreach($keywords as $word){
 		// check for "word " (this will give start of line) or " word" (this will do spaces either side)
-		$newLine = str_replace($word." ", " <span style=\"color: red;\">".$word."</span> ", $newLine);
-		$newLine = str_replace(" ".$word, " <span style=\"color: red;\">".$word."</span>", $newLine);
+		$newLine = str_replace($word." ", " <span style=\"color: white; background: navy;\">".$word."</span> ", $newLine);
+		$newLine = str_replace(" ".$word, " <span style=\"color: white; background: navy;\">".$word."</span>", $newLine);
 	}
 	
-	//add comment back
-	$newLine = $newLine . $tmpComment;
-	
+	//Only if there is a comment in the line
+	If (strpos($newLine, '\'') <> FALSE) {
+		//add comment back
+		$newLine = $newLine . $tmpComment;
+	}
 	
 	//Padding
 	$strpad = (strlen($newLine) - strlen(ltrim($newLine))); // no of characters to pad by
@@ -97,6 +102,9 @@ foreach($strArr as $line){
 	//update
 	//$strArgs = str_replace($line, $HTMLtext, $strArgs);
 	$outputText = $outputText . "<br>" . $HTMLtext;
+	
+	//reset
+	$newLine = "";
 }
 
 // Change spaces to non-breaking space in order to preserve formatting in HTML:
