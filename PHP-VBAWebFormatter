@@ -69,13 +69,22 @@ foreach($strArr as $line){
 
 // Change keywords
 	preg_match_all("'.*\''", $newLine, $matches);
-	//echo "line: " . $newLine . " / match: " . $matches[0][0];
+	//echo "line: " . $newLine . " / match: " . $matches[0][0] ."\n";
+	
+	//save the comment at tmp string if at end of line
+	$tmpComment = str_replace($matches[0][0], "",$newLine);
+	
+	//set string to only be the match
+	$newLine = $matches[0][0];
 	
 	foreach($keywords as $word){
 		// check for "word " (this will give start of line) or " word" (this will do spaces either side)
-		$newLine = str_replace($word." ", " <span style=\"color: white;background:navy;\">".$word."</span> ", $newLine);
-		$newLine = str_replace(" ".$word, " <span style=\"color: white;background:navy;\">".$word."</span>", $newLine);
+		$newLine = str_replace($word." ", " <span style=\"color: red;\">".$word."</span> ", $newLine);
+		$newLine = str_replace(" ".$word, " <span style=\"color: red;\">".$word."</span>", $newLine);
 	}
+	
+	//add comment back
+	$newLine = $newLine . $tmpComment;
 	
 	
 	//Padding
@@ -95,6 +104,5 @@ foreach($strArr as $line){
 
 // Change PHP line break to <br /> to preserve formatting in HTML:
 //$strArgs = nl2br($strArgs);
-
 
 echo $outputText;
