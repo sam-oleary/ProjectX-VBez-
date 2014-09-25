@@ -52,12 +52,12 @@ $strArr = explode("\n", $strArgs);
 
 // keywords array:
 $keywords = Array("Alias", "And", "As", "Boolean", "ByRef", "ByVal", "Call", "Case", "CBool", "CDate", "CDbl", "CInt",
-	"Class", "CLng", "CObj", "Const", "CStr", "Date", "Declare", "Dim", "Do", "Double", "Each", "Else",
-	"ElseIf", "End", "EndIf", "Enum", "Erase", "Error", "Exit", "For", "Friend", "Function", "Get", "Global",
+	"Class", "CLng", "CObj", "Const", "CStr", "Date", "Debug", "Declare", "Dim", "Do", "Double", "Each", "Else",
+	"ElseIf", "End", "EndIf", "Enum", "Erase", "Error", "Exit", "False", "For", "Friend", "Function", "Get", "Global",
 	"GoTo", "If", "Implements", "In", "Inherits", "Integer", "Interface", "Is", "Let", "Lib", "Like", "Long",
 	"Loop", "Me", "Mod", "Module", "New", "Next", "Not", "Nothing", "Object", "Of", "On", "Option", "Optional",
-	"Or", "OrElse", "Private", "Property", "Protected", "Public", "ReadOnly", "ReDim", "Resume", "Return",
-	"Select", "Set", "Shared", "Static", "Step", "Stop", "String", "Sub", "Then", "To", "TypeOf", "Variant",
+	"Or", "OrElse", "Print", "Private", "Property", "Protected", "Public", "ReadOnly", "ReDim", "Resume", "Return",
+	"Select", "Set", "Shared", "Static", "Step", "Stop", "String", "Sub", "Then", "To", "True", "TypeOf", "Variant",
 	"Wend", "When", "While", "With", "WriteOnly");
 
 foreach($strArr as $line){
@@ -73,8 +73,8 @@ foreach($strArr as $line){
 	
 	foreach($keywords as $word){
 		// check for "word " (this will give start of line) or " word" (this will do spaces either side)
-		$newLine = str_replace($word." ", " <span style=\"color: white;background:navy;\">".$word."</span>", $newLine);
-		$newLine = str_replace(" ".$word, "<span style=\"color: white;background:navy;\">".$word."</span> ", $newLine);
+		$newLine = str_replace($word." ", " <span style=\"color: white;background:navy;\">".$word."</span> ", $newLine);
+		$newLine = str_replace(" ".$word, " <span style=\"color: white;background:navy;\">".$word."</span>", $newLine);
 	}
 	
 	
