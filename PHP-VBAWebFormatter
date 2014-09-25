@@ -72,7 +72,11 @@ foreach($strArr as $line){
 	//echo "line: " . $newLine . " / match: " . $matches[0][0];
 	
 	foreach($keywords as $word){
-		$newLine = str_replace($word, "<span style=\"color: navy;\">".$word."</span>", $newLine);
+		// FOR SAM
+		// need a three way if statement to check if the word exists with
+		// " word" or "word " or " word "
+		// and then we have three relveant replacements.
+		$newLine = str_replace(" ".$word." ", " <span style=\"color: white;background:navy;\">".$word."</span> ", $newLine);
 	}
 	
 	
