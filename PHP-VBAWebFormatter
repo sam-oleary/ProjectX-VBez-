@@ -82,7 +82,7 @@ foreach($strArr as $line){
 	
 	foreach($keywords as $word){
 		// check for "word " (this will give start of line) or " word " (this will do spaces either side)
-		$newLine = str_replace($word." ", " <span style=\"color: white; background: navy;\">".$word."</span> ", $newLine);
+		$newLine = str_replace($word." ", "<span style=\"color: white; background: navy;\">".$word."</span> ", $newLine);
 		$newLine = str_replace(" ".$word." ", " <span style=\"color: white; background: navy;\">".$word."</span> ", $newLine);
 	}
 	
