@@ -73,8 +73,22 @@ $theme = array(
     "String" => "#CC9393",
 );
 
-//AN VBA Nightime
+
 /*
+//Standard VBA
+
+$theme = array(
+    "Line_BG" => "white",
+    "Line_Text" => "black",
+    "BG" => "white",
+    "Text" => "black",
+    "Keyword" => "navy",
+    "Comment" => "green",
+    "String" => "black",
+);
+
+//AN VBA Nightime
+
 $theme = array(
     "Line_BG" => "#8A8A8A",
     "Line_Text" => "#0C0C0C",
