@@ -71,6 +71,7 @@ $theme = array(
     "Keyword" => "#CEDF99",
     "Comment" => "#7F9F7F",
     "String" => "#CC9393",
+    "Number" => "#8CD0D3",
 );
 
 
@@ -85,6 +86,7 @@ $theme = array(
     "Keyword" => "navy",
     "Comment" => "green",
     "String" => "black",
+    "Number" => "white";
 );
 
 //AN VBA Nightime
@@ -97,6 +99,7 @@ $theme = array(
     "Keyword" => "#808000",
     "Comment" => "#008080",
     "String" => "#808080",
+    "Number" => "#0C0C0";
 );
 */
 
@@ -122,6 +125,14 @@ foreach($strArr as $line){
 	//Replace comments
 	foreach($keywords as $word){
 		$newLine = preg_replace("/(?<!\w)$word(?!\w)/","<span style=\"color: " . $theme{Keyword} ."; font-weight: bold;\">".$word."</span>", $newLine);
+	}
+
+
+	//Colour numbers
+	preg_match_all("/(?<!\w)[0-9]+(?!\w)/", $newLine, $matchesNum);
+	
+	foreach($matchesNum[0] as $match) {
+		$newLine = str_replace($match, "<span style=\"color:" . $theme{Number} .";\">".$match."</span>", $newLine);
 	}
 
 	//Join comment back to string (if it has a comment after the "code")
