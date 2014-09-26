@@ -128,8 +128,8 @@ foreach($strArr as $line){
 	}
 
 
-	//Colour numbers
-	preg_match_all("/(?<!\w)[0-9]+(?!\w)/", $newLine, $matchesNum);
+	//Colour numbers (think this will fix it!)
+	preg_match_all("/(?<!\w)[0-9]+(?!\w)/", strip_tags($newLine), $matchesNum);
 	
 	foreach($matchesNum[0] as $match) {
 		$newLine = str_replace($match, "<span style=\"color:" . $theme{Number} .";\">".$match."</span>", $newLine);
