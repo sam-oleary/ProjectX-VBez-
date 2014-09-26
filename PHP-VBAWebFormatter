@@ -1,7 +1,7 @@
 $strArgs = "
 Global Const debugMode As Boolean = False '//Debug switch
 
-myString = \"Hello i am a string\"
+myString = \"Hello i am a string\" & getLastRow() & \" - extra string\"
 
 '// FileType Enum
 Public Enum ezFileType
@@ -109,7 +109,8 @@ foreach($strArr as $line){
 	//Remove formatting from quoted text
 	preg_match_all('/"(?!color:)(?=[^>])(.*?)"(?=[^>]*(<|$))/', $newLine, $matchesQ);
 	foreach($matchesQ[0] as $match) {
-		$newLine = str_replace($match, strip_tags($match), $newLine);
+		//$newLine = str_replace($match, strip_tags($match), $newLine);
+		$newLine = str_replace($match, "<span style=\"color: " . $theme{String} .";\">".strip_tags($match)."</span>", $newLine);
 	}
 	
 	//Add padding for text as per the original line		
