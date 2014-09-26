@@ -1,6 +1,8 @@
 $strArgs = "
 Global Const debugMode As Boolean = False '//Debug switch
 
+myString = \"Hello i am a string\"
+
 '// FileType Enum
 Public Enum ezFileType
     ezXLS = -4143
@@ -60,63 +62,60 @@ $keywords = Array("Alias", "And", "As", "Boolean", "ByRef", "ByVal", "Call", "Ca
 	"Select", "Set", "Shared", "Static", "Step", "Stop", "String", "Sub", "Then", "To", "True", "TypeOf", "Variant",
 	"Wend", "When", "While", "With", "WriteOnly");
 
+$theme = array(
+    "Line_BG" => "#0C0C0C",
+    "Line_Text" => "#8A8A8A",
+	"BG" => "#3F3F3F",
+    "Text" => "#DCDCCC",
+	"Keyword" => "#CEDF99",
+    "Comment" => "#7F9F7F",
+);
+
+
+
 //Store Line count var
 $lineCount = 0;
 
 
 foreach($strArr as $line){
 
-//Update line count
-	$lineCount = $lineCount + 1;
-
-// Change comments
+	$i++;
+	
 	preg_match_all("'\'.*'", $line, $matches);
-	$newLine = str_replace($matches[0][0], "<span style=\"color: green;\">".$matches[0][0]."</span>",$line);
+	
+	$newLine = str_replace($matches[0][0], "<span style=\"color: " . $theme{Comment} .";\">".$matches[0][0]."</span>",$line);
 
-// Change keywords	
-	//Check if there is a comment
-	If (strpos($newLine, '\'') <> FALSE) {
-		// ID text before '
-		preg_match_all("'.*\''", $newLine, $matches);
-		
-		//save the comment at tmp string if at end of line
-		$tmpComment = str_replace($matches[0][0], "",$newLine);
-		
-		//set string to only be the match
-		$newLine = $matches[0][0];
-	}
+		If (strpos($newLine, '\'') <> FALSE) {
+			preg_match_all("'.*\''", $newLine, $matches);
+			$tmpComment = str_replace($matches[0][0], "",$newLine);
+			$newLine = $matches[0][0];
+		}
 	
+		foreach($keywords as $word){
+			$newLine = preg_replace("/(?<!\w)$word(?!\w)/","<span style=\"color: " . $theme{Keyword} ."; font-weight: bold;\">".$word."</span>", $newLine);
+		}
+
+		If (strpos($newLine, '\'') <> FALSE) {
+			$newLine = $newLine . $tmpComment;
+		}
 	
-	foreach($keywords as $word){
-		// colour in keyword
-		$newLine = preg_replace("/(?<!\w)$word(?!\w)/","<span style=\"color: navy; font-weight: bold;\">".$word."</span>", $newLine);
-	}
-	
-	//Only if there is a comment in the line
-	If (strpos($newLine, '\'') <> FALSE) {
-		//add comment back
-		$newLine = $newLine . $tmpComment;
-	}
-	
-	//Padding
 	$strpad = (strlen($newLine) - strlen(ltrim($newLine))); // no of characters to pad by
 	$pad_string = "&nbsp;";
-	  
-	//Pad text with pad_string 
-	$HTMLtext = str_pad(trim($newLine), strlen(trim($newLine))+($strpad*strlen($pad_string)), $pad_string, STR_PAD_LEFT);
-
-	//Line Number padding
-	$strpad = (3 - strlen($lineCount)); // no of digits to pad by (3)
-	$count_pad_string = "&nbsp;";
-	  
-	//Pad text with count_pad_string 
-	$paddedNo = "<span style=\"background:white;\">" . str_pad($lineCount, strlen($lineCount)+($strpad*strlen($count_pad_string)), $count_pad_string, STR_PAD_LEFT) . ": </span>&nbsp;";
-
-
-	//update
-	$outputText = $outputText . "<br>" . $HTMLtext; //no line numbers
-	$outputTextCount = $outputTextCount . "<br>" . $paddedNo . $HTMLtext; // line numbers
 	
+	// remove formatting from quoted text
+	preg_match_all('/"(?!color:)(?=[^>])(.*?)"(?=[^>]*(<|$))/', $newLine, $matchesQ);
+		foreach($matchesQ[0] as $match){
+			$newLine = str_replace($match, strip_tags($match), $newLine);
+			}
+			
+	$HTMLtext = str_pad(trim($newLine), strlen(trim($newLine))+($strpad*strlen($pad_string)), $pad_string, STR_PAD_LEFT);
+	$lineCount = "<span style=\"background-color: ". $theme{Line_BG}. ";color: " . $theme{Line_Text} .";\">".str_pad($i, (strlen($i)+(strlen($pad_string)*(strlen($lineCountLen)-strlen($i)))), $pad_string, STR_PAD_LEFT).":</span> ";
+	
+	$outputText = $outputText . "<br />" . $HTMLtext;
+	$countOutputText = $countOutputText."<br />".$lineCount.$HTMLtext;
+	$newLine = "";
+
 }
 
-echo $outputTextCount;
+
+echo "<span style=\"background-color: " . $theme{BG} . ";color: " . $theme{Text} .";\">" . $countOutputText . "</span>";
