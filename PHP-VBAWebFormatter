@@ -62,6 +62,7 @@ $keywords = Array("Alias", "And", "As", "Boolean", "ByRef", "ByVal", "Call", "Ca
 	"Select", "Set", "Shared", "Static", "Step", "Stop", "String", "Sub", "Then", "To", "True", "TypeOf", "Variant",
 	"Wend", "When", "While", "With", "WriteOnly");
 
+//Zenburn
 $theme = array(
     "Line_BG" => "#0C0C0C",
     "Line_Text" => "#8A8A8A",
@@ -72,7 +73,18 @@ $theme = array(
     "String" => "#CC9393",
 );
 
-
+//AN VBA Nightime
+/*
+$theme = array(
+    "Line_BG" => "#8A8A8A",
+    "Line_Text" => "#0C0C0C",
+    "BG" => "#000000",
+    "Text" => "#C0C0C0",
+    "Keyword" => "#808000",
+    "Comment" => "#008080",
+    "String" => "#808080",
+);
+*/
 
 //Store Line count var
 $lineCount = 0;
