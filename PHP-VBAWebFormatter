@@ -62,17 +62,20 @@ $keywords = Array("Alias", "And", "As", "Boolean", "ByRef", "ByVal", "Call", "Ca
 	"Select", "Set", "Shared", "Static", "Step", "Stop", "String", "Sub", "Then", "To", "True", "TypeOf", "Variant",
 	"Wend", "When", "While", "With", "WriteOnly");
 
-//Zenburn
+
+//AN VBA Nightime
+
 $theme = array(
-    "Line_BG" => "#0C0C0C",
-    "Line_Text" => "#8A8A8A",
-    "BG" => "#3F3F3F",
-    "Text" => "#DCDCCC",
-    "Keyword" => "#CEDF99",
-    "Comment" => "#7F9F7F",
-    "String" => "#CC9393",
-    "Number" => "#8CD0D3",
+    "Line_BG" => "#8A8A8A",
+    "Line_Text" => "#0C0C0C",
+    "BG" => "#000000",
+    "Text" => "#C0C0C0",
+    "Keyword" => "#808000",
+    "Comment" => "#008080",
+    "String" => "#808080",
+    "Number" => "cyan";
 );
+
 
 
 /*
@@ -89,6 +92,19 @@ $theme = array(
     "Number" => "white";
 );
 
+//Zenburn
+$theme = array(
+    "Line_BG" => "#0C0C0C",
+    "Line_Text" => "#8A8A8A",
+    "BG" => "#3F3F3F",
+    "Text" => "#DCDCCC",
+    "Keyword" => "#CEDF99",
+    "Comment" => "#7F9F7F",
+    "String" => "#CC9393",
+    "Number" => "#8CD0D3",
+);
+
+
 //AN VBA Nightime
 
 $theme = array(
@@ -99,7 +115,7 @@ $theme = array(
     "Keyword" => "#808000",
     "Comment" => "#008080",
     "String" => "#808080",
-    "Number" => "#0C0C0";
+    "Number" => "cyan";
 );
 */
 
